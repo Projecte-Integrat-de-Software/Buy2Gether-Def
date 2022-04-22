@@ -38,12 +38,13 @@ public enum Session {
     }
 
     /**
-     * ens guarda el nom de l'usuari en base de dades
+     * actualitza un sol parametre de user en base de dades
      * @param doc
-     * @param data
+     * @param field
+     * @param value
      */
-    public void saveUserNameDB(String doc, HashMap data){
-        RDB.saveUserName(doc,data);
+    public void updateUser(String doc,String field, String value){
+        RDB.update(doc,field,value);
     }
 
     public String CreateGroupDB(HashMap data){

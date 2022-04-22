@@ -2,6 +2,8 @@ package com.pis.buy2gether.usecases.home.user.friends;
 
 import android.content.ClipData;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,12 +21,16 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.pis.buy2gether.R;
 import com.pis.buy2gether.databinding.FragmentFriendsBinding;
 import com.pis.buy2gether.model.session.Session;
@@ -51,6 +57,7 @@ public class FriendsFragment extends Fragment implements FriendsListAdapter.Item
 
     //ImageButton btn_return;
     ImageButton btn_amics,btn_settings,btn_lan,btn_return;
+    ShapeableImageView img_pfp;
 
     public View onCreateView(@NonNull LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
         friendsViewModel = new ViewModelProvider(this).get(FriendsViewModel.class);
@@ -61,8 +68,10 @@ public class FriendsFragment extends Fragment implements FriendsListAdapter.Item
         View view = inflater.inflate(R.layout.fragment_friends,container,false);
 
         searchView = view.findViewById(R.id.searchViewFriends);
+        img_pfp = view.findViewById(R.id.img_pfp);
 
         setupUserInfo(view);
+        setUserPfp();
 
         btn_amics = view.findViewById(R.id.btn_amics);
         btn_return = view.findViewById(R.id.btn_return);
@@ -101,6 +110,7 @@ public class FriendsFragment extends Fragment implements FriendsListAdapter.Item
     }
 
     private void setupUserInfo(View view){
+
         String provider = Session.INSTANCE.getDataSession(getContext(),"provider");
 
         if(ProviderType.valueOf(provider) != ProviderType.GUEST) {
@@ -113,6 +123,23 @@ public class FriendsFragment extends Fragment implements FriendsListAdapter.Item
                 }
             });
         }
+    }
+
+    private void setUserPfp(){
+        StorageReference mImageRef = FirebaseStorage.getInstance().getReference("profileImages/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+".jpeg");
+        final long ONE_MEGABYTE = 1024 * 1024;
+        mImageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                binding.imgPfp.setImageBitmap(bm);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getActivity(),"Error al carregar l'imatge de perfil\n"+exception,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -163,8 +190,8 @@ public class FriendsFragment extends Fragment implements FriendsListAdapter.Item
                     Task<DocumentSnapshot> task = friendsViewModel.getUserName(friendID).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot2) {
-                            friendsListAdapter.addFriend(documentSnapshot.getId(),friendID,documentSnapshot2.get("username").toString());
-
+                            String username = documentSnapshot2.get("username")== null ? "unknown" : documentSnapshot2.get("username").toString();
+                            friendsListAdapter.addFriend(documentSnapshot.getId(),friendID,username);
                         }
                     });
                 }

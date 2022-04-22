@@ -131,19 +131,21 @@
                     app:layout_constraintHorizontal_bias="0.524" app:layout_constraintTop_toBottomOf="@+id/text_psw"
                     android:layout_marginTop="20dp"/>
 
-            <androidx.appcompat.widget.AppCompatImageButton
+            <com.google.android.material.imageview.ShapeableImageView
+                    app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
                 android:id="@+id/btn_edit_pfp"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="-15dp"
-                android:background="@color/transparent"
                 android:clickable="true"
+                app:srcCompat="@color/colorAccent"
+                android:backgroundTint="@color/transparent"
                 android:foreground="@drawable/ripple_button_effect"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="@+id/text_pfp"
                 app:layout_constraintEnd_toEndOf="@+id/text_pfp"
                 app:layout_constraintTop_toTopOf="@+id/text_pfp"
-                app:srcCompat="@drawable/img_bruno" />
+            />
 
             <EditText
                     android:id="@+id/edit_username"
@@ -152,7 +154,7 @@
                     android:background="@color/transparent"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:hint="Rocío"
+                    android:hint="Nom"
                     android:textAlignment="viewEnd"
                     app:layout_constraintHorizontal_bias="0.6"
                     app:layout_constraintBottom_toBottomOf="@+id/text_username"
@@ -179,7 +181,7 @@
                     android:ems="10"
                     android:inputType="textPersonName"
                     app:layout_constraintHorizontal_bias="0.6"
-                    android:hint="Barcelona"
+                    android:hint="Ciutat"
                     android:textAlignment="viewEnd"
                     app:layout_constraintBottom_toBottomOf="@+id/text_city"
                     app:layout_constraintEnd_toEndOf="@+id/text_city"

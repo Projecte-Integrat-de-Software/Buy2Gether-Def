@@ -1,6 +1,8 @@
 package com.pis.buy2gether.usecases.home.user.friends;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
@@ -10,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.pis.buy2gether.R;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,9 +53,22 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
 
         holder.myTextView.setText(user.get(id));
         // Modifiquem la foto de perfil (per implementar)
+        setUserPfp(id,holder);
 
         //holder.acceptButton.setVisibility(View.INVISIBLE);
         holder.selectButton.setVisibility(View.VISIBLE);
+    }
+
+    public void setUserPfp(String id, @NonNull @NotNull UsersListAdapter.ViewHolder holder){
+        StorageReference mImageRef = FirebaseStorage.getInstance().getReference("profileImages/"+ id + ".jpeg");
+        final long ONE_MEGABYTE = 1024 * 1024;
+        mImageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                if(bm!=null) holder.pfp.setImageBitmap(bm);
+            }
+        });
     }
 
     public void addUser(String userID, String username){
@@ -102,10 +121,12 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
         RadioButton selectButton;
+        ShapeableImageView pfp;
 
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.name);
+            pfp = itemView.findViewById(R.id.img_friend);
             selectButton = itemView.findViewById(R.id.friend_SEL);
             itemView.setOnClickListener(this);
         }

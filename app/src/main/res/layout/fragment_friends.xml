@@ -119,15 +119,19 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <ImageView
-        android:id="@+id/img_pfpBruno"
-        android:layout_width="77dp"
-        android:layout_height="76dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/img_bruno" />
+    <com.google.android.material.imageview.ShapeableImageView
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            android:id="@+id/img_pfp"
+            android:layout_width="77dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:scaleType="fitXY"
+            android:backgroundTint="@color/transparent"
+            android:foreground="@drawable/ripple_button_effect"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_bruno" />
 
     <TextView
             android:id="@+id/txt_user"
@@ -138,7 +142,7 @@
             android:textSize="17dp"
             android:layout_marginTop="39dp"
             android:text="AA"
-            app:layout_constraintStart_toEndOf="@+id/img_pfpBruno"
+            app:layout_constraintStart_toEndOf="@+id/img_pfp"
             app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
@@ -151,7 +155,7 @@
             android:fontFamily="@font/light"
             android:layout_marginTop="0dp"
             android:text="EEE"
-            app:layout_constraintStart_toEndOf="@+id/img_pfpBruno"
+            app:layout_constraintStart_toEndOf="@+id/img_pfp"
             app:layout_constraintTop_toBottomOf="@+id/txt_user"/>
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_settings"

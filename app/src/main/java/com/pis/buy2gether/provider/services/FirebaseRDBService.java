@@ -25,14 +25,6 @@ public enum FirebaseRDBService {
         db.collection("users").document(doc).collection("Addresses").document(data.get("Address name").toString()).set(data);
     }
 
-    /**
-     * ens guarda el nom de l'usuari segons l'email a base de dades
-     * @param doc (email de l'usuari)
-     * @param data
-     */
-    public void saveUserName(String doc, HashMap data){
-        db.collection("users").document(doc).set(data);
-    }
 
     public void saveGroup(String doc, HashMap data){
         db.collection("Groups").document(doc).set(data);
@@ -44,6 +36,16 @@ public enum FirebaseRDBService {
 
     public void deleteAddress(String user, String doc){
         db.collection("users").document(user).collection("Addresses").document(doc).delete();
+    }
+
+    /**
+     * actualitza un sol parametre de users en base de dades
+     * @param doc
+     * @param field
+     * @param value
+     */
+    public void update(String doc,String field, String value){
+        db.collection("users").document(doc).update(field,value);
     }
 
     public Task<DocumentSnapshot> get(String collectionPath, String doc){
@@ -68,6 +70,7 @@ public enum FirebaseRDBService {
         Query q = db.collection("Friendships").whereNotEqualTo(userID,null);
         return q.get();
     }
+
     public Task<QuerySnapshot> getAddresses(String doc){
         Query q = db.collection("users").document(doc).collection("Addresses");
         return q.get();

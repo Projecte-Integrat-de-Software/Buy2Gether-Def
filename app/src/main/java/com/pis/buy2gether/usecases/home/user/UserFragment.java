@@ -1,6 +1,9 @@
 package com.pis.buy2gether.usecases.home.user;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +14,16 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.pis.buy2gether.R;
+import com.pis.buy2gether.databinding.FragmentSettingsBinding;
 import com.pis.buy2gether.databinding.FragmentUserBinding;
 import com.pis.buy2gether.model.session.Session;
 import com.pis.buy2gether.provider.ProviderType;
@@ -28,7 +36,7 @@ import com.pis.buy2gether.usecases.home.user.settings.SettingsFragment;
 public class UserFragment extends Fragment implements View.OnClickListener {
 
     //private UserViewModel userViewModel;
-    //private FragmentUserBinding binding;
+    private FragmentUserBinding binding;
 
     ImageButton btn_comandes;
     ImageButton btn_adreces;
@@ -40,10 +48,15 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     TextView username;
     TextView description;
 
+    ShapeableImageView img_pfp;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user,container,false);
 
+        binding = FragmentUserBinding.inflate(inflater, container, false);
+
+        setUserPfp();
         setup(view);
 
 
@@ -115,6 +128,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private void setupUserInfo(View view){
         username = view.findViewById(R.id.txt_user);
         description = view.findViewById(R.id.txt_desc);
+        img_pfp = view.findViewById(R.id.img_pfp);
 
         String provider = Session.INSTANCE.getDataSession(getContext(),"provider");
 
@@ -128,6 +142,23 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 }
             });
         }
+    }
+
+    private void setUserPfp(){
+        StorageReference mImageRef = FirebaseStorage.getInstance().getReference("profileImages/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+".jpeg");
+        final long ONE_MEGABYTE = 1024 * 1024;
+        mImageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                img_pfp.setImageBitmap(bm);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getActivity(),"Error al carregar l'imatge de perfil\n"+exception,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
