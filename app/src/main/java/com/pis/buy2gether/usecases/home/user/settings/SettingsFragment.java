@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,6 +44,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 
@@ -56,9 +59,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private int GALLERY_IMAGE_CODE = 1000;
 
     Button btn_change_image, btn_check_image, btn_cancel_avatar_dialog;
-    ImageButton btn_cancel_changepsw_dialog,btn_save_change_psw;
+    ImageButton btn_cancel_changepsw_dialog,btn_save_change_psw,btn_cancel_check_img;
     ShapeableImageView btn_edit_pfp;
     EditText userName,userCity,new_psw,confirm_psw;
+    ImageView img_check_avatar;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -84,15 +88,22 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         return root;
     }
 
+    /**
+     * configura la imatge de perfil del boto UserPfp
+     */
     private void setUserPfp(){
+        // mImageRef represents a reference to a Google Cloud Storage object initialized with a child Firebase Storage location
         StorageReference mImageRef =
                 FirebaseStorage.getInstance().getReference("profileImages/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+".jpeg");
         final long ONE_MEGABYTE = 1024 * 1024;
+
+        //Asynchronously download the object from mImageRef with the maximum size allowed ONE_MEGABYTE and if the task completes succesfully:
         mImageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 DisplayMetrics dm = new DisplayMetrics();
+                //set the bitmap we decoded before as the content of btnEditPfp imageView
                 binding.btnEditPfp.setImageBitmap(bm);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -138,7 +149,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         confirm_psw = changePswPopupView.findViewById(R.id.edtxt_confirm_nova_psw);
         btn_save_change_psw = changePswPopupView.findViewById(R.id.btn_save_change_psw);
 
-
         builder.setView(changePswPopupView);
 
         AlertDialog changePsw_dialog = builder.create();
@@ -148,13 +158,36 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         return changePsw_dialog;
     }
 
-    private void check_Userimage(){
+    private AlertDialog setupCheckImagePopup(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View checkImgPopupView = getLayoutInflater().inflate(R.layout.alert_dialog_check_image,null);
 
+        btn_cancel_check_img = checkImgPopupView.findViewById(R.id.btn_cancel_checkimg_dialog);
+        img_check_avatar = checkImgPopupView.findViewById(R.id.img_check_avatar);
+
+        check_Userimage(img_check_avatar);
+
+        builder.setView(checkImgPopupView);
+
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+
+        return dialog;
     }
 
+    private void check_Userimage(ImageView avatar){
+        //get drawable from imageButton
+         Drawable image = binding.btnEditPfp.getDrawable();
+        //set image_view of alert dialog to image
+        avatar.setImageDrawable(image);
+    }
+
+    /**
+     * mètode per canviar la imatge de perfil de l'usuari
+     */
     private void change_Userimage(){
         showMediaDialog();
-
     }
 
     private void showMediaDialog(){
@@ -162,6 +195,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         builder.setNeutralButton("CÀMERA",new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
+                //ACTION_IMAGE_CAPTURE:intent action to have the camera application to capture image and return to it
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if(intent.resolveActivity(getContext().getPackageManager()) != null){
                     startActivityForResult(intent, TAKE_IMAGE_CODE);
@@ -171,7 +205,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
         builder.setPositiveButton("GALERIA",new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
+                //ACTION PICK: pick the item in data and return
                 Intent intent = new Intent(Intent.ACTION_PICK);
+                //we choose a concret data to sent
                 intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 if(intent.resolveActivity(getContext().getPackageManager()) != null){
                     startActivityForResult(intent, GALLERY_IMAGE_CODE);
@@ -180,10 +216,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-        dialog.getWindow().setLayout(650, 250);
+        dialog.getWindow().setLayout(700, 300);
     }
 
     void saveUserImageDB(Bitmap bitmap){
+        //create an outputstream that in which the data is written to a byte array
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,100, baos);
 
@@ -192,6 +229,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                 .child("profileImages")
                 .child(userID+".jpeg");
 
+        //upload taks that asynchronously upload byte data to this storageRef creating a byte array and copy the valid content to buffer
         storageRef.putBytes(baos.toByteArray()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -205,13 +243,23 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    /**
+     * Actualitza la infromació del perfil de l'usuari
+     * @param ref
+     */
     private void getDownloadURL(StorageReference ref){
+        //Asynchronously retrieves a long lived download URL with a revokable token.??
+        //share file (uri represents the download url)
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                //create a request used to update user profile information. -> Sets the updated photo Uri.
                 UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
                         .setPhotoUri(uri).build();
+
+                //update the user profile info with the request
                 user.updateProfile(request).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -231,15 +279,18 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
         super.onActivityResult(requestCode,resultCode,data);
+        //foto des de càmera
         if(requestCode == TAKE_IMAGE_CODE){
             switch (resultCode){
                 case RESULT_OK:
+                    //get image captured
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                     binding.btnEditPfp.setImageBitmap(bitmap);
                     saveUserImageDB(bitmap);
                     break;
             }
         }
+        //foto des de galeria
         if(requestCode == GALLERY_IMAGE_CODE){
             binding.btnEditPfp.setImageURI(data.getData());
             try {
@@ -249,8 +300,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             }
         }
     }
+
     /**
-     * actualitza eel nom de l'usuari
+     * actualitza el nom de l'usuari
      * @param nom
      */
     private void change_Username(String nom){
@@ -283,11 +335,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    /**
+     * Tanquem sessió
+     */
     private void sign_out(){
         // Eliminem dades guardades localment de l'usuari (email i contrasenya)
         SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         prefs.edit().clear().apply();
-
         viewModel.clearSession();
         // Tanquem sessió
         FirebaseAuth.getInstance().signOut();
@@ -333,10 +387,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_edit_pfp:
                 AlertDialog avatar_alert_dialog = setupAvatarConfigurationPopup();
                 btn_check_image.setOnClickListener(v -> {
-                    avatar_alert_dialog.dismiss();
+                    AlertDialog check_img_alert_dialog = setupCheckImagePopup();
+                    btn_cancel_check_img.setOnClickListener(view1 -> {
+                        check_img_alert_dialog.dismiss();
+                    });
                 });
+
                 btn_change_image.setOnClickListener(v -> {
-                    Toast.makeText(getActivity(), "Change image", Toast.LENGTH_SHORT).show();
                     change_Userimage();
                 });
                 btn_cancel_avatar_dialog.setOnClickListener(v -> {
@@ -363,7 +420,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                         //canviem la contrasenya
                         }else{
                             change_UserPassword(confirm_contrasenya);
-                            //sortim de sessio
+                            //Tanquem sessio
                             sign_out();
                         }
                     }
