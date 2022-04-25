@@ -20,6 +20,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.pis.buy2gether.provider.ProviderType;
+import com.pis.buy2gether.usecases.onboarding.log_in.forgot_psw.ForgotPasswordActivity;
 import com.pis.buy2gether.usecases.onboarding.sign_in.RegisterActivity;
 import com.pis.buy2gether.usecases.home.MainActivity;
 import com.pis.buy2gether.R;
@@ -31,12 +32,10 @@ public class LoginActivity extends AppCompatActivity {
     private int GOOGLE_SIGN_IN = 100;
 
     private ImageButton log;
-    private Button sign;
-    private TextView name;
+    private Button sign, guest;
+    private TextView name, forgotPassword;
     private ImageView image;
-    private TextInputEditText userEditText;
-    private TextInputEditText pswEditText;
-    private Button guest;
+    private TextInputEditText userEditText, pswEditText;
     private ImageButton google_signin;
 
     @Override
@@ -89,6 +88,12 @@ public class LoginActivity extends AppCompatActivity {
             googleClient.signOut();
             /* Realitzem l'intent amb el ID de GOOGLE_SIGN_IN */
             startActivityForResult(googleClient.getSignInIntent(), GOOGLE_SIGN_IN);
+        });
+
+        forgotPassword.setOnClickListener(v -> {
+            Intent i = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+            startActivity(i);
+            finish();
         });
     }
 
@@ -143,5 +148,6 @@ public class LoginActivity extends AppCompatActivity {
 
         name = findViewById(R.id.img_appname);
         image = findViewById(R.id.img_logo);
+        forgotPassword = findViewById(R.id.btn_rememberpsw);
     }
 }

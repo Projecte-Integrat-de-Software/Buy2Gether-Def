@@ -16,6 +16,9 @@
             android:name=".usecases.onboarding.sign_in.RegisterActivity"
             android:exported="false" />
         <activity
+            android:name=".usecases.onboarding.log_in.forgot_psw.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".usecases.onboarding.log_in.LoginActivity"
             android:exported="false" />
         <activity

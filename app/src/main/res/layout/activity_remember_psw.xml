@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBg"
+    android:backgroundTint="#FCF9FE">
+
+    <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".elementos_sin_clasificar.register.RegisterFragment">
+
+        <Button
+        android:id="@+id/btn_remember"
+        style="@style/largeButton"
+        android:layout_width="230dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/btn_reglog"
+        android:focusable="auto"
+        android:fontFamily="@font/regular"
+        android:foreground="@drawable/ripple_button_effect"
+        android:gravity="center"
+        android:keepScreenOn="false"
+        android:text="RECUPERAR"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blanco"
+        app:rippleColor="@color/purple_200" />
+
+            <ImageView
+                    android:id="@+id/img_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="75dp"
+                    android:layout_marginEnd="20dp"
+                    android:contentDescription="@string/app_name"
+                    android:gravity="center"
+                    android:transitionName="image"
+                    android:src="@drawable/img_logo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.525"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ImageContrastCheck"/>
+
+            <View
+                    android:id="@+id/blanco"
+                    android:layout_width="270dp"
+                    android:layout_height="90dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/fondo_blanco"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.496"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_appname"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                    android:id="@+id/txt_username"
+                    android:layout_width="220dp"
+                    android:layout_height="49dp"
+                    android:layout_marginTop="20dp"
+                    android:textColorHint="@color/colorHint"
+                    app:layout_constraintEnd_toEndOf="@+id/blanco"
+                    app:layout_constraintStart_toStartOf="@+id/blanco"
+                    app:layout_constraintTop_toTopOf="@+id/blanco">
+
+                <com.google.android.material.textfield.TextInputEditText
+
+                        android:id="@+id/txtin_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/light"
+                        android:hint="Email"
+                        android:background="@color/colorAccentUltraLight"
+                        android:textColor="@color/colorHint"
+                        android:textColorHint="@color/colorHint"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                    android:id="@+id/img_appname"
+                    android:layout_width="270dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/regular"
+                    android:text="RECUPERA LA CONTRASENYA"
+                    android:textAlignment="center"
+                    android:transitionName="text"
+                    android:textColor="#6F4FC9"
+                    android:textSize="19dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.518"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_logo"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
