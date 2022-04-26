@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(!viewModel.login_main(email, psw)){
                     viewModel.showAlert();
                 }
+                showHome(email, ProviderType.BASIC);
             }else{
                 userEditText.startAnimation(viewModel.shakeError());
                 pswEditText.startAnimation(viewModel.shakeError());
@@ -118,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
             if(!viewModel.login_google(data)){
                 viewModel.showAlert();
             }
+            showHome("prueba", ProviderType.GOOGLE);
     }
     }
 
