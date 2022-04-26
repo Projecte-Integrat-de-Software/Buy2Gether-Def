@@ -7,12 +7,11 @@ import android.view.animation.TranslateAnimation;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModel;
 import com.google.android.gms.tasks.Task;
-import com.pis.buy2gether.model.session.Session;
+import com.pis.buy2gether.model.session.Session_to_refactor;
 import com.pis.buy2gether.usecases.home.MainActivity;
 import com.pis.buy2gether.provider.ProviderType;
 
 import java.util.HashMap;
-import java.util.Map;
 
 class RegisterViewModel extends ViewModel {
 
@@ -46,6 +45,6 @@ class RegisterViewModel extends ViewModel {
         userInfo.put("email",email);
         userInfo.put("username",username);
         userInfo.put("provider",provider);
-        Session.INSTANCE.saveDB("users",uid, userInfo);
+        Session_to_refactor.INSTANCE.saveDB("users",uid, userInfo);
     }
 }

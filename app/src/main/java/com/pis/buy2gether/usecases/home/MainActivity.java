@@ -1,7 +1,5 @@
 package com.pis.buy2gether.usecases.home;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.badge.BadgeDrawable;
@@ -14,7 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.pis.buy2gether.R;
 import com.pis.buy2gether.databinding.ActivityMainBinding;
-import com.pis.buy2gether.model.session.Session;
+import com.pis.buy2gether.model.session.Session_to_refactor;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         String email = bundle.getString("email");
         String provider = bundle.getString("provider");
-        Session.INSTANCE.setDataSession(this,"email",email);
-        Session.INSTANCE.setDataSession(this,"provider",provider);
+        Session_to_refactor.INSTANCE.setDataSession(this,"email",email);
+        Session_to_refactor.INSTANCE.setDataSession(this,"provider",provider);
     }
     @Override
     public void onBackPressed() {

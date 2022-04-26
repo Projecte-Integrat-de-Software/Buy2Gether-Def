@@ -1,12 +1,10 @@
 package com.pis.buy2gether.usecases.home.user.friends;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.pis.buy2gether.model.session.Session;
+import com.pis.buy2gether.model.session.Session_to_refactor;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +12,11 @@ import java.util.List;
 public class FriendsViewModel extends ViewModel {
 
     public Task getFriends(){
-        return Session.INSTANCE.getFriendsDB(getUserID());
+        return Session_to_refactor.INSTANCE.getFriendsDB(getUserID());
     }
 
     public Task getUsers(List friends){
-        return Session.INSTANCE.getUsers(friends);
+        return Session_to_refactor.INSTANCE.getUsers(friends);
     }
 
     public String getUserID(){
@@ -30,13 +28,13 @@ public class FriendsViewModel extends ViewModel {
     }
 
     public Task<DocumentSnapshot> getUserName(String id) {
-        return Session.INSTANCE.getUserByID(id);
+        return Session_to_refactor.INSTANCE.getUserByID(id);
     }
     /*public Task<DocumentSnapshot> getFriendshipID(String friendID) {
         return Session.INSTANCE.getFriendshipID(getUserID(), friendID);
     }*/
     public void deleteFriend(String id){
-        Session.INSTANCE.deleteFriend(id);
+        Session_to_refactor.INSTANCE.deleteFriend(id);
     }
 
     public void sendRequest(String toID) {
@@ -44,6 +42,6 @@ public class FriendsViewModel extends ViewModel {
         inviteInfo.put("fromID",getUserID());
         inviteInfo.put("toID",toID);
 
-        Session.INSTANCE.CreateFriendRequest(inviteInfo);
+        Session_to_refactor.INSTANCE.CreateFriendRequest(inviteInfo);
     }
 }

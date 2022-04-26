@@ -13,10 +13,27 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d9e2424a-fa23-49c4-8768-ab886f25efe7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/common/pojo/Grup.java" afterDir="false" />
+    <list default="true" id="d9e2424a-fa23-49c4-8768-ab886f25efe7" name="Changes" comment="Add Grup pojo">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/model/domain/livedata/ComandasLifeData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/model/domain/pojo/Comanda.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/model/session/Session_to_refactor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/provider/services/FirebaseAuthenticationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/model/session/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/model/session/Session.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/common/pojo/Grup.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/model/domain/pojo/Grup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/home/product_view/group/creation/GroupCreationFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/home/product_view/group/creation/GroupCreationFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/home/product_view/group/creation/GroupCreationViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/home/product_view/group/creation/GroupCreationViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/notifications/NotificationsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/notifications/NotificationsViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/user/UserFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/user/UserFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/user/address/AddressViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/user/address/AddressViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/user/friends/FriendsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/user/friends/FriendsFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/user/friends/FriendsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/user/friends/FriendsViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/user/settings/SettingsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/home/user/settings/SettingsViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/launch/SplashScreenActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/launch/SplashScreenActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/onboarding/log_in/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/onboarding/log_in/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/onboarding/log_in/LoginViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/onboarding/log_in/LoginViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/onboarding/sign_in/RegisterViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pis/buy2gether/usecases/onboarding/sign_in/RegisterViewModel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,10 +109,17 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="cidr.known.project.marker" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.notifications" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Properties" />
+    <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
   </component>
   <component name="RecentsManager">
     <key name="android.template.313858937">
@@ -515,7 +539,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650305859278</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Add Grup pojo">
+      <created>1650526953465</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1650526953466</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -535,7 +566,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Refactoring Log In" />
     <MESSAGE value="Add animations to Log In" />
     <MESSAGE value="Refactoring Sign in and add listeners" />
     <MESSAGE value="Refactoring Sign in and add listeners to buttons." />
@@ -560,7 +590,8 @@
     <MESSAGE value="Implemented Friend Requests and Group Invites" />
     <MESSAGE value="Implemented Notifications" />
     <MESSAGE value="Fixed bug that would cause the app to crash when loading groups" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug that would cause the app to crash when loading groups" />
+    <MESSAGE value="Add Grup pojo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Grup pojo" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

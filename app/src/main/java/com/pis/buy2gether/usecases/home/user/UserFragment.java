@@ -3,7 +3,6 @@ package com.pis.buy2gether.usecases.home.user;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +18,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.pis.buy2gether.R;
-import com.pis.buy2gether.databinding.FragmentSettingsBinding;
 import com.pis.buy2gether.databinding.FragmentUserBinding;
-import com.pis.buy2gether.model.session.Session;
+import com.pis.buy2gether.model.session.Session_to_refactor;
 import com.pis.buy2gether.provider.ProviderType;
 import com.pis.buy2gether.usecases.home.user.address.AddressFragment;
 import com.pis.buy2gether.usecases.home.user.friends.FriendsFragment;
@@ -130,11 +127,11 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         description = view.findViewById(R.id.txt_desc);
         img_pfp = view.findViewById(R.id.img_pfp);
 
-        String provider = Session.INSTANCE.getDataSession(getContext(),"provider");
+        String provider = Session_to_refactor.INSTANCE.getDataSession(getContext(),"provider");
 
         if(ProviderType.valueOf(provider) != ProviderType.GUEST) {
             String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            Session.INSTANCE.getUserByID(currentUser).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            Session_to_refactor.INSTANCE.getUserByID(currentUser).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     if(documentSnapshot.get("username").toString() != null) username.setText(documentSnapshot.get("username").toString());

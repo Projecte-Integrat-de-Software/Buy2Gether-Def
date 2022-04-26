@@ -1,16 +1,9 @@
 package com.pis.buy2gether.usecases.home.user.address;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.text.Editable;
-import android.view.View;
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.pis.buy2gether.model.session.Session;
+import com.pis.buy2gether.model.session.Session_to_refactor;
 
 import java.util.HashMap;
 
@@ -23,7 +16,7 @@ public class AddressViewModel extends ViewModel {
         addressInfo.put("Telephone",tel);
         addressInfo.put("Zip code",cp);
 
-        Session.INSTANCE.saveAddressDB(getUser(),addressInfo);
+        Session_to_refactor.INSTANCE.saveAddressDB(getUser(),addressInfo);
     }
 
     private String getUser(){
@@ -35,7 +28,7 @@ public class AddressViewModel extends ViewModel {
     }
 
     void deleteAddressDB(String nom){
-        Session.INSTANCE.deleteAddressDB(getUser(),nom);
+        Session_to_refactor.INSTANCE.deleteAddressDB(getUser(),nom);
     }
 
     public HashMap addressInfo(String nom, String address, String tel, String cp){
@@ -48,6 +41,6 @@ public class AddressViewModel extends ViewModel {
     }
 
     public Task getAddresses(){
-        return Session.INSTANCE.getAddressesDB(getUser());
+        return Session_to_refactor.INSTANCE.getAddressesDB(getUser());
     }
 }

@@ -4,23 +4,18 @@ import android.content.ClipData;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -33,15 +28,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.pis.buy2gether.R;
 import com.pis.buy2gether.databinding.FragmentFriendsBinding;
-import com.pis.buy2gether.model.session.Session;
+import com.pis.buy2gether.model.session.Session_to_refactor;
 import com.pis.buy2gether.provider.ProviderType;
 import com.pis.buy2gether.usecases.home.user.UserFragment;
-import com.pis.buy2gether.usecases.home.user.address.AddressListAdapter;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class FriendsFragment extends Fragment implements FriendsListAdapter.ItemClickListener,UsersListAdapter.ItemClickListener {
 
@@ -111,11 +103,11 @@ public class FriendsFragment extends Fragment implements FriendsListAdapter.Item
 
     private void setupUserInfo(View view){
 
-        String provider = Session.INSTANCE.getDataSession(getContext(),"provider");
+        String provider = Session_to_refactor.INSTANCE.getDataSession(getContext(),"provider");
 
         if(ProviderType.valueOf(provider) != ProviderType.GUEST) {
             String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            Session.INSTANCE.getUserByID(currentUser).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            Session_to_refactor.INSTANCE.getUserByID(currentUser).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     binding.txtUser.setText(documentSnapshot.get("username").toString());

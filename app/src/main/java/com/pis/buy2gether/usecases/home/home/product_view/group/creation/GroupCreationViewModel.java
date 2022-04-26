@@ -1,16 +1,14 @@
 package com.pis.buy2gether.usecases.home.home.product_view.group.creation;
 
-import android.content.Context;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+
 import androidx.lifecycle.ViewModel;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.pis.buy2gether.model.session.Session;
+import com.pis.buy2gether.model.session.Session_to_refactor;
 
 import java.util.HashMap;
 
@@ -34,7 +32,7 @@ public class GroupCreationViewModel extends ViewModel {
         groupInfo.put("Group Visibility",groupVisibility);
         groupInfo.put("Admin User",adminUser);
 
-        return Session.INSTANCE.CreateGroupDB(groupInfo);
+        return Session_to_refactor.INSTANCE.CreateGroupDB(groupInfo);
     }
 
     public void SendInvite(String userID, String groupID) {
@@ -43,14 +41,14 @@ public class GroupCreationViewModel extends ViewModel {
         inviteInfo.put("GroupID",groupID);
         inviteInfo.put("fromUser",getUser());
 
-        Session.INSTANCE.CreateInvite(inviteInfo);
+        Session_to_refactor.INSTANCE.CreateInvite(inviteInfo);
     }
     public Task<DocumentSnapshot> getUserName(String id){
-        return Session.INSTANCE.getUserByID(id);
+        return Session_to_refactor.INSTANCE.getUserByID(id);
     }
 
     public Task<QuerySnapshot> getFriends(){
-        return Session.INSTANCE.getFriendsDB(getUser());
+        return Session_to_refactor.INSTANCE.getFriendsDB(getUser());
     }
     public String getUser(){
         return FirebaseAuth.getInstance().getCurrentUser().getUid();

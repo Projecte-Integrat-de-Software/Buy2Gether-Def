@@ -65,10 +65,7 @@ public class GroupCreationFragment extends Fragment implements View.OnClickListe
         binding.groupPopup.codiImage.setOnClickListener(this);
         binding.groupPopup.moreinformation.setOnClickListener(this);
         binding.groupPopup.sharemessages.setOnClickListener(this);
-
         binding.privateButton.setTextColor(ContextCompat.getColor(getContext(), R.color.purple_500));
-
-
         binding.groupPopup.shareDummy.setOnClickListener(this);
         return root;
     }

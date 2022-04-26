@@ -1,16 +1,10 @@
 package com.pis.buy2gether.usecases.home.user.settings;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+
 import androidx.lifecycle.ViewModel;
 import com.google.firebase.auth.FirebaseAuth;
-import com.pis.buy2gether.model.session.Session;
-import com.pis.buy2gether.provider.ProviderType;
-
-import java.io.ByteArrayInputStream;
-import java.util.HashMap;
+import com.pis.buy2gether.model.session.Session_to_refactor;
 
 public class SettingsViewModel extends ViewModel {
 
@@ -21,7 +15,7 @@ public class SettingsViewModel extends ViewModel {
     }
 
     public void clearSession(){
-        Session.INSTANCE.clearDataSession(context);
+        Session_to_refactor.INSTANCE.clearDataSession(context);
     }
 
     /**
@@ -29,7 +23,7 @@ public class SettingsViewModel extends ViewModel {
      * @param ciutat
      */
     void change_UserCity(String ciutat){
-        Session.INSTANCE.updateUser(getUser(),"city",ciutat);
+        Session_to_refactor.INSTANCE.updateUser(getUser(),"city",ciutat);
     }
 
     /**
@@ -37,7 +31,7 @@ public class SettingsViewModel extends ViewModel {
      * @param nom
      */
     void change_Username(String nom){
-        Session.INSTANCE.updateUser(getUser(),"username",nom);
+        Session_to_refactor.INSTANCE.updateUser(getUser(),"username",nom);
     }
 
 

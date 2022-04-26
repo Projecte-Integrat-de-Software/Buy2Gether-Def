@@ -1,4 +1,4 @@
-package com.pis.buy2gether.usecases.common.pojo;
+package com.pis.buy2gether.model.domain.pojo;
 
 import java.util.List;
 

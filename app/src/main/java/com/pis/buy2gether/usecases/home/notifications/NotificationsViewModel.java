@@ -1,13 +1,11 @@
 package com.pis.buy2gether.usecases.home.notifications;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.pis.buy2gether.model.session.Session;
+import com.pis.buy2gether.model.session.Session_to_refactor;
 
 import java.util.HashMap;
 
@@ -17,39 +15,39 @@ public class NotificationsViewModel extends ViewModel {
         HashMap<String,String> friendShip = new HashMap<>();
         friendShip.put(id1,id1);
         friendShip.put(id2,id2);
-        Session.INSTANCE.addFriendship(friendShip);
+        Session_to_refactor.INSTANCE.addFriendship(friendShip);
     }
 
     public void removeGroupInvite(String id){
-        Session.INSTANCE.deleteGroupInvite(id);
+        Session_to_refactor.INSTANCE.deleteGroupInvite(id);
     }
 
     public String getUser(){
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
     public void removeFriendRequest(String id){
-        Session.INSTANCE.deleteFriendRequest(id);
+        Session_to_refactor.INSTANCE.deleteFriendRequest(id);
     }
 
     public void joinGroup(String user, String extraID) {
         HashMap<String,String> membership = new HashMap<>();
         membership.put("UserID",user);
         membership.put("GroupID",extraID);
-        Session.INSTANCE.joinGroup(membership);
+        Session_to_refactor.INSTANCE.joinGroup(membership);
     }
 
     public Task<DocumentSnapshot> getGroup(String id) {
-        return Session.INSTANCE.getGroup(id);
+        return Session_to_refactor.INSTANCE.getGroup(id);
     }
 
     public Task<DocumentSnapshot> getUserName(String id) {
-        return Session.INSTANCE.getUserByID(id);
+        return Session_to_refactor.INSTANCE.getUserByID(id);
     }
 
     public Task<QuerySnapshot> getFriendRequests() {
-        return Session.INSTANCE.getFriendRequests(getUser());
+        return Session_to_refactor.INSTANCE.getFriendRequests(getUser());
     }
     public Task<QuerySnapshot> getGroupInvites() {
-        return Session.INSTANCE.getGroupInvites(getUser());
+        return Session_to_refactor.INSTANCE.getGroupInvites(getUser());
     }
 }
